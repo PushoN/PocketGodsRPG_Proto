@@ -1,6 +1,0 @@
-[submodule "PocketGodsRPG_Proto/Assets/Core"]
-	path = PocketGodsRPG_Proto/Assets/Core
-	url = git@github.com:pocket-playlab/Core.git
-[submodule "PocketGodsRPG_Proto/Assets/Services"]
-	path = PocketGodsRPG_Proto/Assets/Services
-	url = git@github.com:pocket-playlab/services.git
