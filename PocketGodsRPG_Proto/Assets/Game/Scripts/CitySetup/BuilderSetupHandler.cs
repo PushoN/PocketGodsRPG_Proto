@@ -34,12 +34,12 @@ public class BuilderSetupHandler : MonoBehaviour {
 
 	void Awake() {
 		sharedInstance = this;
-	}
-
-	// Use this for initialization
-	void Start () {
 		this.currentState = BuilderStateType.NONE;
 		this.InitializeStateTable();
+	}
+
+	void Start() {
+		this.StartCoroutine(this.DelayedMain());
 	}
 
 	void OnDestroy() {
@@ -47,6 +47,11 @@ public class BuilderSetupHandler : MonoBehaviour {
 			EventBroadcaster.Instance.RemoveObserver(eventName);
 		}
 
+	}
+
+	private IEnumerator DelayedMain() {
+		yield return null;
+		this.SetState(BuilderStateType.SETUP_TILE);
 	}
 
 	public void InitializeStateTable() {
