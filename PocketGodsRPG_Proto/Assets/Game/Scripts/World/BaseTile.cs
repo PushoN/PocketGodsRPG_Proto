@@ -12,6 +12,8 @@ public class BaseTile : MonoBehaviour {
 	private int gridX;
 	private int gridY;
 
+	private bool occupied = false;
+
 	/// <summary>
 	/// Gets the grid. 0 index for X-coord. 1 index for Y-coord
 	/// </summary>
@@ -51,5 +53,13 @@ public class BaseTile : MonoBehaviour {
 
 	public float GetTileScale() {
 		return this.transform.localScale.x;
+	}
+
+	public void MarkAsOccupied() {
+		this.occupied = true;
+	}
+
+	public bool IsOccupied() {
+		return this.occupied;
 	}
 }
