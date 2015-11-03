@@ -33,7 +33,7 @@ public class WorldInputHandler : MonoBehaviour {
 	private Vector3 dragOrigin;
 	private Vector3 velocity;
 
-	private bool hasCalledMoveTowards = false;
+	private bool hasTouchedObject = false;
 	private float totalTimeDrag = 0.0f;
 
 	// Use this for initialization
