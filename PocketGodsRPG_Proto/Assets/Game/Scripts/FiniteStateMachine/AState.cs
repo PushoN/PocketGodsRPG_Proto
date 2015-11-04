@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Representation of a FSM state
@@ -8,41 +9,45 @@ using System.Collections;
 /// </summary>
 public abstract class AState  {
 
-	private AState previousState = null;
-	private AState nextState = null;
-
 	private string stateLabel = null;
+	private Dictionary<string, AState> transitionStates = new Dictionary<string, AState>();
 
+
+	protected AStateMachine stateMachine;
+	
 	public abstract void OnEnter();
 	public abstract void OnUpdate();
 	public abstract void OnExit();
 
-	public void SetLabel(string name) {
-		this.stateLabel = name;
+	public AState(string stateLabel, AStateMachine stateMachine) {
+		this.stateLabel = stateLabel;
+		this.stateMachine = stateMachine;
 	}
 
 	public string GetLabel() {
 		return this.stateLabel;
 	}
 
-	public void AddTransition(AState previousState, AState nextState) {
-		this.previousState = previousState;
-		this.nextState = nextState;
+	public void AddTransition(string stateLabel, AState state) {
+		if(this.transitionStates.ContainsKey(stateLabel) == false) {
+			this.transitionStates.Add(stateLabel, state);
+		}
+		else {
+			Debug.LogError(stateLabel + " already exists as a transition state from " +this.stateLabel+ ".");
+		}
 	}
 
-	public AState GetNextState() {
-		return this.nextState;
+	public AState GetTransitionState(string stateLabel) {
+		if(this.HasTransition(stateLabel)) {
+			return this.transitionStates[stateLabel];
+		}
+		else {
+			Debug.LogError(stateLabel + " not found as transition state in " +this.stateLabel+ ".");
+			return null;
+		}
 	}
 
-	public AState GetPreviousState() {
-		return this.previousState;
-	}
-
-	public bool HasNextState() {
-		return (this.nextState != null);
-	}
-
-	public bool HasPreviousState() {
-		return (this.previousState != null);
+	public bool HasTransition(string stateLabel) {
+		return (this.transitionStates.ContainsKey(stateLabel));
 	}
 }

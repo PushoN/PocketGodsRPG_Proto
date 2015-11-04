@@ -30,7 +30,6 @@ public class WorldInputHandler : MonoBehaviour {
 	private InputState currentState = InputState.NONE;
 
 	private Vector3 currentFingerPointer;
-	private Vector3 dragOrigin;
 	private Vector3 velocity;
 
 	private bool hasTouchedObject = false;
@@ -66,7 +65,6 @@ public class WorldInputHandler : MonoBehaviour {
 		switch(this.currentState) {
 		case InputState.STARTED: 
 			this.currentFingerPointer = gameCamera.ScreenToViewportPoint(Input.mousePosition);
-			this.dragOrigin = this.currentFingerPointer;
 			this.currentState = InputState.DRAGGED;
 			break;
 			
@@ -79,7 +77,6 @@ public class WorldInputHandler : MonoBehaviour {
 			
 			if(this.HasReachedElapsedDragTime()) {
 				this.totalTimeDrag = 0.0f;
-				this.dragOrigin = this.currentFingerPointer;
 			}
 			break;
 

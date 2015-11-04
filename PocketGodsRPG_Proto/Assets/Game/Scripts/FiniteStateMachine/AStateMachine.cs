@@ -6,11 +6,12 @@ using System.Collections.Generic;
 /// An instantiable/inheritable state machine reusable for complex components.
 /// By: NeilDG
 /// </summary>
-public abstract class StateMachine {
+public abstract class AStateMachine {
 
-	private AState initialState = null;
-	private AState finalState = null;
-	private AState currentState = null;
+	protected Dictionary<string, object> dataTable = new Dictionary<string, object>();
+
+	protected AState initialState = null;
+	protected AState currentState = null;
 
 	private bool halted = false;
 	private bool started = false;
@@ -19,14 +20,36 @@ public abstract class StateMachine {
 		this.initialState = state;
 	}
 
-	public void SetFinalState(AState state) {
-		this.finalState = state;
+	/// <summary>
+	/// Puts arbitrary data in the state machine. This is the lookup table for other states to get needed data.
+	/// Replaces the data if a key provided is already existing.
+	/// </summary>
+	/// <param name="key">Key.</param>
+	/// <param name="value">Value.</param>
+	public void PutData(string key, object value) {
+		if(this.dataTable.ContainsKey(key)) {
+			this.dataTable.Remove(key);
+		}
+
+		this.dataTable.Add(key,value);
 	}
+	
+	public object RetrieveData(string key) {
+		if(this.dataTable.ContainsKey(key)) {
+			return this.dataTable[key];
+		}
+		else {
+			Debug.LogError(key+ " does not exist in the state machine data table!");
+			return null;
+		}
+	}
+
 
 	public void StartMachine() {
 		this.currentState = this.initialState;
 
 		if(this.currentState != null) {
+			this.started = true;
 			this.currentState.OnEnter();
 		}
 		else {
@@ -63,25 +86,15 @@ public abstract class StateMachine {
 	/// <summary>
 	/// Transitions the current state to its next state. Will not transition if the current state do not have any next state!
 	/// </summary>
-	public void Transition() {
+	public void TransitionTo(string stateLabel) {
 		this.currentState.OnExit();
 
-		if(this.currentState.HasNextState()) {
-			this.currentState = this.currentState.GetNextState();
+		if(this.currentState.HasTransition(stateLabel)) {
+			this.currentState = this.currentState.GetTransitionState(stateLabel);
 			this.currentState.OnEnter();
 		}
-	}
-
-	/// <summary>
-	/// Transitions the current state to its previous state. By theory, FSMs do not move back to its previous state (one should point the next state
-	/// towards its supposedly previous state). Use with caution.
-	/// </summary>
-	public void MoveBack() {
-		this.currentState.OnExit();
-
-		if(this.currentState.HasPreviousState()) {
-			this.currentState = this.currentState.GetPreviousState();
-			this.currentState.OnEnter();
+		else {
+			Debug.LogError("Transition state " +stateLabel+ " does not exist in " +this.currentState.GetLabel());
 		}
 	}
 
