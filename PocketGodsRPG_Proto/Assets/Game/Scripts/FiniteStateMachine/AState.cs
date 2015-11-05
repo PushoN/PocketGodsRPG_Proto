@@ -12,7 +12,6 @@ public abstract class AState  {
 	private string stateLabel = null;
 	private Dictionary<string, AState> transitionStates = new Dictionary<string, AState>();
 
-
 	protected AStateMachine stateMachine;
 	
 	public abstract void OnEnter();

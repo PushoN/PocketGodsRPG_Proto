@@ -3,8 +3,8 @@ using System.Collections;
 
 public class WorldInputStateController : MonoBehaviour {
 
-	private static WorldInputHandler sharedInstance = null;
-	public static WorldInputHandler Instance {
+	private static WorldInputStateController sharedInstance = null;
+	public static WorldInputStateController Instance {
 		get {
 			return sharedInstance;
 		}
@@ -25,15 +25,54 @@ public class WorldInputStateController : MonoBehaviour {
 
 	private InputStateMachine inputStateMachine;
 
+	void Awake() { 
+		sharedInstance = this;
+	}
+
 	// Use this for initialization
 	void Start () {
 		this.inputStateMachine = new InputStateMachine(this.gameCamera);
 		this.inputStateMachine.InitializeStateTransitions();
-		this.inputStateMachine.StartMachine();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		this.inputStateMachine.OnUpdate();
+		if(Input.GetMouseButtonDown(0)) {
+			this.NoInputStateAction();
+		}
+		else if(this.inputStateMachine.GetCurrentStateLabel() == InputStateMachine.DRAG_WORLD_STATE) {
+			this.DragWorldAction();
+		}
+
+		this.gameCamera.transform.position -= this.velocity;
+		this.velocity.x *= Mathf.Pow(DRAG_REDUCER_FACTOR, Time.deltaTime);
+		this.velocity.y *= Mathf.Pow(DRAG_REDUCER_FACTOR, Time.deltaTime);
+	}
+
+	private void NoInputStateAction() {
+		this.currentFingerPointer = gameCamera.ScreenToViewportPoint(Input.mousePosition);
+		this.inputStateMachine.TransitionTo(InputStateMachine.DRAG_WORLD_STATE);
+	}
+
+	private void DragWorldAction() {
+		Vector3 mousePosition = gameCamera.ScreenToViewportPoint(Input.mousePosition);
+		float deltaX = mousePosition.x - this.currentFingerPointer.x;
+		float deltaY = mousePosition.y - this.currentFingerPointer.y;
+		this.velocity = new Vector3(deltaX * DRAG_SPEED, deltaY * DRAG_SPEED, 0);
+		this.currentFingerPointer = gameCamera.ScreenToViewportPoint(Input.mousePosition);
+		
+		if(this.HasReachedElapsedDragTime()) {
+			this.totalTimeDrag = 0.0f;
+		}
+
+		if(Input.GetMouseButtonUp(0)) {
+			this.inputStateMachine.TransitionTo(InputStateMachine.NO_INPUT_STATE);
+		}
+	}
+
+	private bool HasReachedElapsedDragTime() {
+		this.totalTimeDrag += Time.deltaTime;
+		
+		return (this.totalTimeDrag >= DRAG_GIVEN_TIME);
 	}
 }

@@ -18,7 +18,7 @@ public class InputStateMachine : AStateMachine {
 	private NoInputState noInputState;
 	private MouseDownState mouseDownState;
 	private DragWorldState dragWorldState;
-
+	
 	public InputStateMachine(Camera gameCamera) {
 		this.gameCamera = gameCamera;
 

@@ -21,22 +21,11 @@ public class NoInputState : AState {
 
 	public override void OnUpdate ()
 	{
-		if(Input.GetMouseButtonDown(0)) {
-			this.ValidateMouseDown();
-		}
+
 	}
 
 	public override void OnExit ()
 	{
 		Debug.Log ("NoInputState exit");
-	}
-
-	private void ValidateMouseDown() {
-		Vector3 currentFingerPointer = this.gameCamera.ScreenToViewportPoint(Input.mousePosition);
-
-		this.stateMachine.PutData(InputStateMachine.FINGER_POINTER_KEY, currentFingerPointer);
-
-		Vector3 positionStored = (Vector3) this.stateMachine.RetrieveData(InputStateMachine.FINGER_POINTER_KEY);
-		this.stateMachine.TransitionTo(InputStateMachine.DRAG_WORLD_STATE);
 	}
 }
