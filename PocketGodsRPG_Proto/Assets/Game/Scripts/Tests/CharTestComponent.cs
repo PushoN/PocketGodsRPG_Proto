@@ -81,8 +81,8 @@ public class CharTestComponent : MonoBehaviour {
 
 	private void PrintCharacterStats() {
 		Debug.Log ("------"+this.testLabel+ "------");
-		Debug.Log ("Health: " +this.character.GetHealthAttribute().GetModifiedValue() +
-		           " Attack: " +this.character.GetAttackAttribute().GetModifiedValue() + 
+		Debug.Log (@"Health: " +this.character.GetHealthAttribute().GetModifiedValue() +
+		           @" Attack: " +this.character.GetAttackAttribute().GetModifiedValue() + 
 		           " Defense: " +this.character.GetDefenseAttribute().GetModifiedValue() +
 		           " Speed: " +this.character.GetSpeedAttribute().GetModifiedValue());
 		Debug.Log ("------END OF STATS------");
