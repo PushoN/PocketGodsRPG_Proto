@@ -17,7 +17,8 @@ public class AttributeBonusPercent {
 	private PercentType percentType;
 
 	/// <summary>
-	/// Parameter value should be 0.0 - 1.0f
+	/// Parameter value should be 0.0 - 1.0f.
+	/// Percent type should be INCREASING/DECREASING.
 	/// </summary>
 	/// <param name="percentNormalized">Percent normalized.</param>
 	public AttributeBonusPercent(float percentNormalized, PercentType percentType) {

@@ -25,5 +25,12 @@ public class CharacterStatsTest : MonoBehaviour {
 		SpeedAttribute speedAttribute = new SpeedAttribute(1,1.0f);
 		
 		this.character = new CharacterData(attackAttribute, defenseAttribute, speedAttribute, healthAttribute);
+
+		Debug.Log ("-----Default Stats------");
+		Debug.Log ("Health: " +this.character.GetHealthAttribute().GetModifiedValue() +
+			" Attack: " +this.character.GetAttackAttribute().GetModifiedValue() + 
+			" Defense: " +this.character.GetDefenseAttribute().GetModifiedValue() +
+			" Speed: " +this.character.GetSpeedAttribute().GetModifiedValue());
+		Debug.Log ("----Default Stats End----");
 	}
 }
