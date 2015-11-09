@@ -54,7 +54,14 @@ public class BattleInputController : MonoBehaviour {
 
 	private void ProcessMouseDown(Collider hitObject) {
 		if(hitObject != null) {
-			Debug.Log ("Hit object: " +hitObject.gameObject.name);
+
+			ControllableUnit controllableUnit = hitObject.gameObject.GetComponent<ControllableUnit>();
+
+			if(controllableUnit != null) {
+				Debug.Log ("Hit controllable unit:  "+controllableUnit.GetUnitName());
+				this.activated = false;
+			}
+
 		}
 		else {
 			Debug.Log ("No object hit. Deactivating input controller.");

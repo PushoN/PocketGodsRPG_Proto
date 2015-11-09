@@ -20,6 +20,7 @@ public class BattleSystemHandler : MonoBehaviour {
 	}
 
 	[SerializeField] private BattleDataHolder battleDataHolder;
+	[SerializeField] private TurnManager turnManager;
 	
 	private List<ControllableUnit> teamAUnitList = new List<ControllableUnit>();
 	private List<ControllableUnit> teamBUnitList = new List<ControllableUnit>();
@@ -49,6 +50,10 @@ public class BattleSystemHandler : MonoBehaviour {
 		yield return new WaitForSeconds(0.01f);
 
 		this.battleDataHolder.InitializeTeamRoster();
+	}
+
+	public TurnManager GetTurnManager() {
+		return this.turnManager;
 	}
 
 }
