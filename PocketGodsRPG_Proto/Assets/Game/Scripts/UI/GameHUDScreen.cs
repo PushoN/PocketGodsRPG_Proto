@@ -13,6 +13,6 @@ public class GameHUDScreen : MonoBehaviour {
 	}
 
 	public void OnAttackButtonClicked() {
-
+		BattleInputController.Instance.ActivateTargeting();
 	}
 }
