@@ -29,12 +29,16 @@ public class BattleDataHolder : MonoBehaviour {
 
 			unitInstance.transform.localPosition = this.teamAPosition.localPosition;
 			unitInstance.transform.SetParent(BattleSystemHandler.Instance.transform, false);
+
+			BattleComposition.Instance.AddUnitsForTeamA(unitInstance);
 		}
 
 		foreach(ControllableUnit controllableUnit in this.teamBUnitRoster) {
 			ControllableUnit unitInstance = GameObject.Instantiate(controllableUnit) as ControllableUnit;
 			unitInstance.transform.localPosition = this.teamBPosition.localPosition;
 			unitInstance.transform.SetParent(BattleSystemHandler.Instance.transform, false);
+
+			BattleComposition.Instance.AddUnitsForTeamB(unitInstance);
 		}
 	}
 }

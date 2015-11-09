@@ -61,4 +61,8 @@ public class ControllableUnit : MonoBehaviour {
 		return this.characterData;
 	}
 
+	public string GetUnitName() {
+		return this.unitName;
+	}
+
 }

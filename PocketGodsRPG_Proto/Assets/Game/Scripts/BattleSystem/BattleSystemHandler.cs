@@ -34,7 +34,11 @@ public class BattleSystemHandler : MonoBehaviour {
 	void Start () {
 		this.currentState = BattleState.INITIALIZE;
 		this.StartCoroutine(this.DelayedStart());	
+		BattleComposition.Initialize();
+	}
 
+	void OnDestroy() {
+		BattleComposition.Destroy();
 	}
 
 	public BattleState GetCurrentState() {
