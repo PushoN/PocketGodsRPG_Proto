@@ -14,5 +14,6 @@ public class GameHUDScreen : MonoBehaviour {
 
 	public void OnAttackButtonClicked() {
 		BattleInputController.Instance.ActivateTargeting();
+		EventBroadcaster.Instance.PostEvent(EventNames.ON_USER_SELECTED_SKILL);
 	}
 }

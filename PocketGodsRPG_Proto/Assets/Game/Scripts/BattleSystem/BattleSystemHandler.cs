@@ -14,7 +14,7 @@ public class BattleSystemHandler : MonoBehaviour {
 	public enum BattleState {
 		NONE,
 		INITIALIZE,
-		COMPOSE_TEAM,
+		PRE_GAMEPLAY,
 		GAMEPLAY,
 		RESULTS
 	}
@@ -34,8 +34,12 @@ public class BattleSystemHandler : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		this.currentState = BattleState.INITIALIZE;
-		this.StartCoroutine(this.DelayedStart());	
 		BattleComposition.Initialize();
+
+		this.StartCoroutine(this.DelayedStart());	
+
+
+
 	}
 
 	void OnDestroy() {
@@ -50,6 +54,9 @@ public class BattleSystemHandler : MonoBehaviour {
 		yield return new WaitForSeconds(0.01f);
 
 		this.battleDataHolder.InitializeTeamRoster();
+
+		//QQQQ start battle immediately
+		this.turnManager.StartTurnForTeamA();
 	}
 
 	public TurnManager GetTurnManager() {
