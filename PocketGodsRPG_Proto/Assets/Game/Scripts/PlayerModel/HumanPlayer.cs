@@ -27,6 +27,10 @@ public class HumanPlayer : IPlayer {
 				Debug.Log("Hoooman selected " +controllableUnit);
 				this.performAction = false;
 
+				ControllableUnit selectedUnit = BattleComposition.Instance.GetUnitAtTeamA(0); //select 1st unit for the meantime.
+				ISkill normalSkill = SkillsManager.Instance.GetSkill(selectedUnit.GetUnitIdentity(),SkillNamesHolder.NORMAL_ATTACK_SKILL);
+				normalSkill.Perform(controllableUnit);
+
 				BattleSystemHandler.Instance.GetTurnManager().ReportTurnFinished();
 			}
 		}

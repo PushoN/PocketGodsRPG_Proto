@@ -76,5 +76,13 @@ public class BattleComposition {
 		return this.teamBUnits.Values.ToList();
 	}
 
+	public ControllableUnit GetUnitAtTeamA(int index) {
+		return this.GetAllTeamAUnits()[index];
+	}
+
+	public ControllableUnit GetUnitAtTeamB(int index) {
+		return this.GetAllTeamBUnits()[index];
+	}
+
 
 }

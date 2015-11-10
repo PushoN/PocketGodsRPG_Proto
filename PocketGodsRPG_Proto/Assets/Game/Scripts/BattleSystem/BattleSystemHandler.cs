@@ -22,8 +22,6 @@ public class BattleSystemHandler : MonoBehaviour {
 	[SerializeField] private BattleDataHolder battleDataHolder;
 	[SerializeField] private TurnManager turnManager;
 
-	private BattleState currentState = BattleState.NONE;
-
 	private CyclicBarrierSequence battleBarrierSequence = new CyclicBarrierSequence();
 
 	void Awake() {
@@ -54,10 +52,6 @@ public class BattleSystemHandler : MonoBehaviour {
 
 	void OnDestroy() {
 		BattleComposition.Destroy();
-	}
-
-	public BattleState GetCurrentState() {
-		return this.currentState;
 	}
 
 	private IEnumerator DelayedStart() {

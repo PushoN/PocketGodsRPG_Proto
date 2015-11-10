@@ -15,7 +15,12 @@ public class NormalAttackSkill : ISkill {
 	}
 
 	public void Perform(ControllableUnit controllableUnit) {
-		Debug.Log ("Normal attack skill to " +controllableUnit);
+		AttributeBonus damageOutcome = new AttributeBonus(-2,1);
+
+		HealthAttribute healthAttribute = controllableUnit.GetCharacterData().GetHealthAttribute();
+		healthAttribute.AddAttributeBonus(damageOutcome);
+
+		Debug.Log ("Normal attack skill to " +controllableUnit+ ". Unit new HP is: " +controllableUnit.GetCharacterData().GetHealthAttribute().GetModifiedValue());
 	}
 
 	public void Finish() {
