@@ -21,9 +21,6 @@ public class BattleSystemHandler : MonoBehaviour {
 
 	[SerializeField] private BattleDataHolder battleDataHolder;
 	[SerializeField] private TurnManager turnManager;
-	
-	private List<ControllableUnit> teamAUnitList = new List<ControllableUnit>();
-	private List<ControllableUnit> teamBUnitList = new List<ControllableUnit>();
 
 	private BattleState currentState = BattleState.NONE;
 
@@ -69,11 +66,6 @@ public class BattleSystemHandler : MonoBehaviour {
 		yield return new WaitForSeconds(0.01f);
 
 		this.battleBarrierSequence.StartExecution();
-
-		/*this.battleDataHolder.InitializeTeamRoster();
-
-		//QQQQ start battle immediately
-		this.turnManager.StartTurnForTeamA();*/
 	}
 
 	public TurnManager GetTurnManager() {
