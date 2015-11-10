@@ -38,10 +38,10 @@ public class CyclicBarrierSequence {
 	public void MoveToNextBarrier() {
 		if(this.eventsTable[this.currentIndex].HasFinishedSequence()) {
 			this.currentIndex++;
-		}
 
-		if(this.HasFinished() == false) {
-			this.StartExecution();
+			if(this.HasFinished() == false) {
+				this.StartExecution();
+			}
 		}
 	}
 

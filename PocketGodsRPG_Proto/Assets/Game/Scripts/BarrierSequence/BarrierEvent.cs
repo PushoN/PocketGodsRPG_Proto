@@ -7,9 +7,12 @@ public class BarrierEvent {
 	private string eventName;
 	private List<ASequence> sequenceList = new List<ASequence>();
 
-	public BarrierEvent(string eventName, List<ASequence> sequenceList) {
+	public BarrierEvent(string eventName) {
 		this.eventName = eventName;
-		this.sequenceList = sequenceList;
+	}
+
+	public void AddSequence(ASequence sequence) {
+		this.sequenceList.Add(sequence);
 	}
 
 	//executes specified sequences

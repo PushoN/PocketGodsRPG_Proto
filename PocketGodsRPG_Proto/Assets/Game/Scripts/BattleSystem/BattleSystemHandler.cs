@@ -32,20 +32,18 @@ public class BattleSystemHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//initialize seqeuences
-		List<ASequence> initSeqList = new List<ASequence>();
 
 		//INTIALIZE BARRIER EVENT
 		TeamRosterInitSequence teamRosterInit = new TeamRosterInitSequence(this.battleBarrierSequence, this.battleDataHolder);
-		initSeqList.Add(teamRosterInit);
+		BarrierEvent initializeEvent = new BarrierEvent(BattleState.INITIALIZE.ToString());
+		initializeEvent.AddSequence(teamRosterInit);
 
-		BarrierEvent initializeEvent = new BarrierEvent(BattleState.INITIALIZE.ToString(), initSeqList);
-
-		List<ASequence> preGameSeqList = new List<ASequence>();
 		TurnComputeSequence turnComputeSeq = new TurnComputeSequence(this.battleBarrierSequence, this.turnManager);
-		preGameSeqList.Add(turnComputeSeq);
+		TempSkillInitSequence initSkillSeq = new TempSkillInitSequence(this.battleBarrierSequence);
 
-		BarrierEvent preGamePlayEvent = new BarrierEvent(BattleState.PRE_GAMEPLAY.ToString(), preGameSeqList);
+		BarrierEvent preGamePlayEvent = new BarrierEvent(BattleState.PRE_GAMEPLAY.ToString());
+		preGamePlayEvent.AddSequence(turnComputeSeq);
+		preGamePlayEvent.AddSequence(initSkillSeq);
 
 		this.battleBarrierSequence.CreateMajorEvent(initializeEvent);
 		this.battleBarrierSequence.CreateMajorEvent(preGamePlayEvent);

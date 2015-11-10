@@ -48,6 +48,8 @@ public class ControllableUnit : MonoBehaviour {
 
 		this.unitID = new UnitIdentity(this.unitName);
 		this.PrintCharacterStats();
+
+		EventBroadcaster.Instance.PostEvent(EventNames.ON_UNIT_INITIALIZE_SUCCESS);
 	}
 
 	public void PrintCharacterStats() {
@@ -65,6 +67,10 @@ public class ControllableUnit : MonoBehaviour {
 
 	public string GetUnitName() {
 		return this.unitName;
+	}
+
+	public UnitIdentity GetUnitIdentity() {
+		return this.unitID;
 	}
 
 }

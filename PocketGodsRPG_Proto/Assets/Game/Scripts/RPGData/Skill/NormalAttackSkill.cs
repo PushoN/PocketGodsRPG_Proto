@@ -23,6 +23,6 @@ public class NormalAttackSkill : ISkill {
 	}
 
 	public string GetSkillName() {
-		return "NormalAttack";
+		return SkillNamesHolder.NORMAL_ATTACK_SKILL;
 	}
 }
