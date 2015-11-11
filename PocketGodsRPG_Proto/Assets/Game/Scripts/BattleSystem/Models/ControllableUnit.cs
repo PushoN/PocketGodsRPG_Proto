@@ -38,6 +38,7 @@ public class ControllableUnit : MonoBehaviour {
 	[SerializeField] private SpeedDefaultValue speedDefaultValue;
 	
 	private CharacterData characterData;
+	private UnitIdentity unitID;
 	
 	void Start() {
 		this.characterData = new CharacterData(new AttackAttribute(this.attackDefaultValue.value, this.attackDefaultValue.multiplier), 
@@ -45,7 +46,10 @@ public class ControllableUnit : MonoBehaviour {
 		                                   new SpeedAttribute(this.speedDefaultValue.value, this.speedDefaultValue.multiplier), 
 		                                   new HealthAttribute(this.healthDefaultValue.value, this.healthDefaultValue.multiplier));
 
+		this.unitID = new UnitIdentity(this.unitName);
 		this.PrintCharacterStats();
+
+		EventBroadcaster.Instance.PostEvent(EventNames.ON_UNIT_INITIALIZE_SUCCESS);
 	}
 
 	public void PrintCharacterStats() {
@@ -63,6 +67,10 @@ public class ControllableUnit : MonoBehaviour {
 
 	public string GetUnitName() {
 		return this.unitName;
+	}
+
+	public UnitIdentity GetUnitIdentity() {
+		return this.unitID;
 	}
 
 }

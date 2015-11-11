@@ -41,4 +41,8 @@ public class BattleDataHolder : MonoBehaviour {
 			BattleComposition.Instance.AddUnitsForTeamB(unitInstance);
 		}
 	}
+
+	public int GetTotalNumberOfUnits() {
+		return (this.teamAUnitRoster.Length + this.teamBUnitRoster.Length);
+	}
 }

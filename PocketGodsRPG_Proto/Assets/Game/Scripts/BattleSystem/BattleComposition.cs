@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// This represents the battle composition of the game where it has access to team A and team B.
@@ -65,6 +66,22 @@ public class BattleComposition {
 			Debug.LogError(unitName + " does not exist in team B.");
 			return null;
 		}
+	}
+
+	public List<ControllableUnit> GetAllTeamAUnits() {
+		return this.teamAUnits.Values.ToList();
+	}
+
+	public List<ControllableUnit> GetAllTeamBUnits() {
+		return this.teamBUnits.Values.ToList();
+	}
+
+	public ControllableUnit GetUnitAtTeamA(int index) {
+		return this.GetAllTeamAUnits()[index];
+	}
+
+	public ControllableUnit GetUnitAtTeamB(int index) {
+		return this.GetAllTeamBUnits()[index];
 	}
 
 

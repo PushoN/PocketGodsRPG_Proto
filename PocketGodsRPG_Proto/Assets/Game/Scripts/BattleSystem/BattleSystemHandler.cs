@@ -14,18 +14,15 @@ public class BattleSystemHandler : MonoBehaviour {
 	public enum BattleState {
 		NONE,
 		INITIALIZE,
-		COMPOSE_TEAM,
+		PRE_GAMEPLAY,
 		GAMEPLAY,
 		RESULTS
 	}
 
 	[SerializeField] private BattleDataHolder battleDataHolder;
 	[SerializeField] private TurnManager turnManager;
-	
-	private List<ControllableUnit> teamAUnitList = new List<ControllableUnit>();
-	private List<ControllableUnit> teamBUnitList = new List<ControllableUnit>();
 
-	private BattleState currentState = BattleState.NONE;
+	private CyclicBarrierSequence battleBarrierSequence = new CyclicBarrierSequence();
 
 	void Awake() {
 		sharedInstance = this;
@@ -33,23 +30,36 @@ public class BattleSystemHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		this.currentState = BattleState.INITIALIZE;
-		this.StartCoroutine(this.DelayedStart());	
-		BattleComposition.Initialize();
+
+		//INTIALIZE BARRIER EVENT
+		TeamRosterInitSequence teamRosterInit = new TeamRosterInitSequence(this.battleBarrierSequence, this.battleDataHolder);
+		BarrierEvent initializeEvent = new BarrierEvent(BattleState.INITIALIZE.ToString());
+		initializeEvent.AddSequence(teamRosterInit);
+
+		TurnComputeSequence turnComputeSeq = new TurnComputeSequence(this.battleBarrierSequence, this.turnManager);
+		TempSkillInitSequence initSkillSeq = new TempSkillInitSequence(this.battleBarrierSequence);
+		InitHPBarSequence initHPBarSequence = new InitHPBarSequence(this.battleBarrierSequence);
+
+		BarrierEvent preGamePlayEvent = new BarrierEvent(BattleState.PRE_GAMEPLAY.ToString());
+		preGamePlayEvent.AddSequence(turnComputeSeq);
+		preGamePlayEvent.AddSequence(initHPBarSequence);
+		preGamePlayEvent.AddSequence(initSkillSeq);
+
+		this.battleBarrierSequence.CreateMajorEvent(initializeEvent);
+		this.battleBarrierSequence.CreateMajorEvent(preGamePlayEvent);
+
+		this.StartCoroutine(this.DelayedStart());
+
 	}
 
 	void OnDestroy() {
 		BattleComposition.Destroy();
 	}
 
-	public BattleState GetCurrentState() {
-		return this.currentState;
-	}
-
 	private IEnumerator DelayedStart() {
 		yield return new WaitForSeconds(0.01f);
 
-		this.battleDataHolder.InitializeTeamRoster();
+		this.battleBarrierSequence.StartExecution();
 	}
 
 	public TurnManager GetTurnManager() {

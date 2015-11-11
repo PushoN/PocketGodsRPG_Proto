@@ -16,6 +16,7 @@ public class BattleInputController : MonoBehaviour {
 	[SerializeField] private Camera gameCamera;
 
 	private bool activated = false;
+	private ControllableUnit controllableUnit;
 
 	void Awake() {
 		sharedInstance = this;
@@ -58,7 +59,7 @@ public class BattleInputController : MonoBehaviour {
 			ControllableUnit controllableUnit = hitObject.gameObject.GetComponent<ControllableUnit>();
 
 			if(controllableUnit != null) {
-				Debug.Log ("Hit controllable unit:  "+controllableUnit.GetUnitName());
+				this.controllableUnit = controllableUnit;
 				this.activated = false;
 			}
 
@@ -68,5 +69,17 @@ public class BattleInputController : MonoBehaviour {
 			this.activated = false;
 		}
 
+	}
+
+	public ControllableUnit GetLastTouchedUnit() {
+		return this.controllableUnit;
+	}
+
+	public void ReleaseTouchedUnit() {
+		this.controllableUnit = null;
+	}
+
+	public bool HasTouchedControllableUnit() {
+		return (this.controllableUnit != null);
 	}
 }
