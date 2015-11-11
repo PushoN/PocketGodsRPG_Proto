@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public interface ISkill {
 
@@ -10,9 +11,9 @@ public interface ISkill {
 	/// Performs the skill on the specified controllable unit
 	/// </summary>
 	/// <param name="controllableUnit">Controllable unit.</param>
-	void Perform(ControllableUnit controllableUnit);
-
+	void Perform(ControllableUnit sourceUnit, ControllableUnit targetUnit);
 	void Finish();
+	void AddOnFinishAction(TweenCallback action);
 
 	string GetSkillName();
 }
