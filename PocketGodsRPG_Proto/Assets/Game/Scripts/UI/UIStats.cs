@@ -16,20 +16,22 @@ public class UIStats : MonoBehaviour {
 	[SerializeField] private Canvas mainUICanvas;
 	[SerializeField] private CanvasScaler canvasScaler;
 
+	private RectTransform rectTransform;
+
 	void Awake() {
 		sharedInstance = this;
 	}
 
 	// Use this for initialization
 	void Start () {
-	
+		this.rectTransform = this.GetComponent<RectTransform>();
 	}
 
 	public float GetReferenceWidth() {
-		return this.canvasScaler.referenceResolution.x;
+		return this.rectTransform.rect.width;
 	}
 
 	public float GetReferenceHeight() {
-		return this.canvasScaler.referenceResolution.y;
+		return this.rectTransform.rect.height;
 	}
 }
