@@ -17,6 +17,7 @@ public class TurnManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		this.playerForTeamA = new HumanPlayer();
+		this.playerForTeamB = new SimpleEnemyPlayer();
 	}
 
 	void Update() {

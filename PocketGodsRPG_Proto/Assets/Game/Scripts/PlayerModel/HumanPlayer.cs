@@ -31,6 +31,7 @@ public class HumanPlayer : IPlayer {
 				ISkill normalSkill = SkillsManager.Instance.GetSkill(selectedUnit.GetUnitIdentity(),SkillNamesHolder.NORMAL_ATTACK_SKILL);
 				normalSkill.Perform(controllableUnit);
 
+				BattleInputController.Instance.ReleaseTouchedUnit();
 				BattleSystemHandler.Instance.GetTurnManager().ReportTurnFinished();
 			}
 		}

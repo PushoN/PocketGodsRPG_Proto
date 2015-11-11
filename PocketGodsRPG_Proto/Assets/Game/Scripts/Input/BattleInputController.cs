@@ -75,6 +75,10 @@ public class BattleInputController : MonoBehaviour {
 		return this.controllableUnit;
 	}
 
+	public void ReleaseTouchedUnit() {
+		this.controllableUnit = null;
+	}
+
 	public bool HasTouchedControllableUnit() {
 		return (this.controllableUnit != null);
 	}
