@@ -11,10 +11,11 @@ public abstract class ConcreteAttribute: AttributeBase {
 	private List<AttributeBonusPercent> bonusPercentList = new List<AttributeBonusPercent>();
 
 	private int modifiedValue = 0;
+	private int maxValue = 0;
 	private bool valueUpdated = true;
 	
 	public ConcreteAttribute(int baseValue, float multiplier): base(baseValue, multiplier) {
-
+		this.maxValue = this.GetBaseValue();
 	}
 
 	public void AddAttributeBonus(AttributeBonus attributeBonus) {
@@ -71,5 +72,9 @@ public abstract class ConcreteAttribute: AttributeBase {
 		return this.modifiedValue;
 
 
+	}
+
+	public int GetMaxValue() {
+		return this.maxValue;
 	}
 }

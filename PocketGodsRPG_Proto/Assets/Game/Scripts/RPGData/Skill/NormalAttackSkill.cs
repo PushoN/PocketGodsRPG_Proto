@@ -7,7 +7,8 @@ using DG.Tweening;
 /// </summary>
 public class NormalAttackSkill : ISkill {
 
-	private TweenCallback onFinishAction = null;
+	private System.Action onFinishAction = null;
+	private ControllableUnit targetUnit;
 
 	public void Activate() {
 
@@ -19,6 +20,8 @@ public class NormalAttackSkill : ISkill {
 
 	public void Perform(ControllableUnit sourceUnit, ControllableUnit targetUnit) {
 
+		this.targetUnit = targetUnit;
+
 		AttributeBonus damageOutcome = new AttributeBonus(-2,1);
 		
 		HealthAttribute healthAttribute = targetUnit.GetCharacterData().GetHealthAttribute();
@@ -29,14 +32,21 @@ public class NormalAttackSkill : ISkill {
 
 		this.PerformAnimation(sourceUnit, targetUnit);
 
-
 	}
 
 	public void Finish() {
+		Parameters parameters = new Parameters();
+		parameters.PutObjectExtra(HPBarElement.UNIT_REFERENCE_KEY, this.targetUnit);
+
+		EventBroadcaster.Instance.PostEvent(EventNames.ON_UNIT_CHANGED_HP,parameters);
 		Debug.Log ("Finished execution of skill");
+
+		if(this.onFinishAction != null) {
+			this.onFinishAction();
+		}
 	}
 
-	public void AddOnFinishAction(TweenCallback action) {
+	public void AddOnFinishAction(System.Action action) {
 		this.onFinishAction = action;
 	}
 
@@ -57,7 +67,7 @@ public class NormalAttackSkill : ISkill {
 		Sequence tweenSequence = DOTween.Sequence();
 		tweenSequence.Append(sourceUnit.transform.DOMove(targetPos, 1.0f).SetEase(Ease.OutExpo));
 		tweenSequence.Append(sourceUnit.transform.DOMove(originalSourcePos, 1.0f).SetEase(Ease.OutExpo));
-		tweenSequence.OnComplete(this.onFinishAction);
+		tweenSequence.OnComplete(this.Finish);
 
 		tweenSequence.Play();
 

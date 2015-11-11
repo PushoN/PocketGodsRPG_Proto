@@ -13,7 +13,7 @@ public interface ISkill {
 	/// <param name="controllableUnit">Controllable unit.</param>
 	void Perform(ControllableUnit sourceUnit, ControllableUnit targetUnit);
 	void Finish();
-	void AddOnFinishAction(TweenCallback action);
+	void AddOnFinishAction(System.Action action);
 
 	string GetSkillName();
 }
