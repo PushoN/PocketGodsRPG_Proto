@@ -21,12 +21,4 @@ public class HPBarElement : MonoBehaviour {
 		this.assignedUnit = unit;
 	}
 
-	public void PositionOnUnit() {
-		if(this.assignedUnit != null) {
-			Vector3 screenPos = Camera.main.WorldToScreenPoint(assignedUnit.transform.position);
-			this.transform.localPosition = screenPos;
-		}
-	}
-
-
 }

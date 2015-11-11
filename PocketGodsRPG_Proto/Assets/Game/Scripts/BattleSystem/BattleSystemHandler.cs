@@ -38,9 +38,11 @@ public class BattleSystemHandler : MonoBehaviour {
 
 		TurnComputeSequence turnComputeSeq = new TurnComputeSequence(this.battleBarrierSequence, this.turnManager);
 		TempSkillInitSequence initSkillSeq = new TempSkillInitSequence(this.battleBarrierSequence);
+		InitHPBarSequence initHPBarSequence = new InitHPBarSequence(this.battleBarrierSequence);
 
 		BarrierEvent preGamePlayEvent = new BarrierEvent(BattleState.PRE_GAMEPLAY.ToString());
 		preGamePlayEvent.AddSequence(turnComputeSeq);
+		preGamePlayEvent.AddSequence(initHPBarSequence);
 		preGamePlayEvent.AddSequence(initSkillSeq);
 
 		this.battleBarrierSequence.CreateMajorEvent(initializeEvent);

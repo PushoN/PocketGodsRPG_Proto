@@ -8,7 +8,6 @@ using System.Collections.Generic;
 public class InitHPBarSequence : ASequence {
 	
 	public InitHPBarSequence(CyclicBarrierSequence barrierSequence) : base(barrierSequence) {
-		
 	}
 
 	public override void Execute ()
@@ -17,15 +16,23 @@ public class InitHPBarSequence : ASequence {
 		List<ControllableUnit> teamBList = BattleComposition.Instance.GetAllTeamBUnits();
 
 		foreach(ControllableUnit unit in teamAList) {
+
+			Vector3 unitScreenPos = Camera.main.WorldToViewportPoint(unit.transform.position);
+
 			Parameters parameters = new Parameters();
-			parameters.PutObjectExtra(GameHUDScreen.UNIT_POSITION_KEY, unit.transform.position);
+			parameters.PutObjectExtra(GameHUDScreen.UNIT_POSITION_KEY, unitScreenPos);
+			parameters.PutObjectExtra(GameHUDScreen.CONTROLLABLE_UNIT_KEY, unit);
 
 			EventBroadcaster.Instance.PostEvent(EventNames.ON_RETRIEVE_UNIT_POSITION, parameters);
 		}
 
 		foreach(ControllableUnit unit in teamBList) {
+
+			Vector3 unitScreenPos = Camera.main.WorldToViewportPoint(unit.transform.position);
+
 			Parameters parameters = new Parameters();
-			parameters.PutObjectExtra(GameHUDScreen.UNIT_POSITION_KEY, unit.transform.position);
+			parameters.PutObjectExtra(GameHUDScreen.UNIT_POSITION_KEY, unitScreenPos);
+			parameters.PutObjectExtra(GameHUDScreen.CONTROLLABLE_UNIT_KEY, unit);
 			
 			EventBroadcaster.Instance.PostEvent(EventNames.ON_RETRIEVE_UNIT_POSITION, parameters);
 		}
