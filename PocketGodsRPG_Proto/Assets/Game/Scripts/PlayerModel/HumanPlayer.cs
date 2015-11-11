@@ -8,6 +8,9 @@ public class HumanPlayer : IPlayer {
 
 	private bool performAction = false;
 
+	private ControllableUnit friendlyUnit;
+	private ControllableUnit targetUnit;
+
 	public HumanPlayer() {
 
 	}
@@ -24,16 +27,16 @@ public class HumanPlayer : IPlayer {
 		}
 
 		//get selected controllable unit to apply skill
-		ControllableUnit controllableUnit = BattleInputController.Instance.GetLastTouchedUnit();
-		ControllableUnit selectedUnit = BattleComposition.Instance.GetUnitAtTeamA(0); //select 1st unit for the meantime.
+		this.targetUnit = BattleInputController.Instance.GetLastTouchedUnit();
+		this.friendlyUnit = BattleComposition.Instance.GetUnitAtTeamA(0); //select 1st unit for the meantime.
 
-		if(controllableUnit != null && controllableUnit != selectedUnit) {
-			Debug.Log("Hoooman selected " +controllableUnit);
+		if(this.targetUnit != null && this.targetUnit != this.friendlyUnit ) {
+			Debug.Log("Hoooman selected " +this.targetUnit);
 			this.performAction = false;
 
-			ISkill normalSkill = SkillsManager.Instance.GetSkill(selectedUnit.GetUnitIdentity(),SkillNamesHolder.NORMAL_ATTACK_SKILL);
+			ISkill normalSkill = SkillsManager.Instance.GetSkill(this.friendlyUnit.GetUnitIdentity(),SkillNamesHolder.NORMAL_ATTACK_SKILL);
 			normalSkill.AddOnFinishAction(this.OnSkillFinished);
-			normalSkill.Perform(selectedUnit,controllableUnit);
+			normalSkill.Perform(this.friendlyUnit ,this.targetUnit);
 
 			BattleInputController.Instance.ReleaseTouchedUnit();
 
@@ -44,6 +47,9 @@ public class HumanPlayer : IPlayer {
 	public void OnFinishedTurn() {
 		//deactivate managers to bar human player input
 		Debug.Log("Hoooman finished his turn!");
+
+		this.targetUnit.UpdateLifeStatus();
+		EventBroadcaster.Instance.PostEvent(EventNames.ON_CHECK_TEAM_UNITS);
 		EventBroadcaster.Instance.RemoveObserver(EventNames.ON_USER_SELECTED_SKILL);
 	}
 

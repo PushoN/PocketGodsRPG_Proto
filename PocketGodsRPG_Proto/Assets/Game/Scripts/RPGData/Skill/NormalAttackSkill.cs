@@ -22,7 +22,7 @@ public class NormalAttackSkill : ISkill {
 
 		this.targetUnit = targetUnit;
 
-		AttributeBonus damageOutcome = new AttributeBonus(-2,1);
+		AttributeBonus damageOutcome = new AttributeBonus(-10,1);
 		
 		HealthAttribute healthAttribute = targetUnit.GetCharacterData().GetHealthAttribute();
 		healthAttribute.AddAttributeBonus(damageOutcome);

@@ -39,7 +39,9 @@ public class ControllableUnit : MonoBehaviour {
 	
 	private CharacterData characterData;
 	private UnitIdentity unitID;
-	
+
+	private bool alive = true;
+
 	void Start() {
 		this.characterData = new CharacterData(new AttackAttribute(this.attackDefaultValue.value, this.attackDefaultValue.multiplier), 
 		                                   new DefenseAttribute(this.defenseDefaultValue.value, this.defenseDefaultValue.multiplier), 
@@ -71,6 +73,22 @@ public class ControllableUnit : MonoBehaviour {
 
 	public UnitIdentity GetUnitIdentity() {
 		return this.unitID;
+	}
+
+	/// <summary>
+	/// Marks the controllable unit as dead if HP has reached zero
+	/// </summary>
+	public void UpdateLifeStatus() {
+		int hpValue = this.characterData.GetHealthAttribute().GetModifiedValue();
+
+		if(hpValue <= 0) {
+			this.alive = false;
+			//needed death animations to play here
+		}
+	}
+
+	public bool IsDead() {
+		return !this.alive;
 	}
 
 }
