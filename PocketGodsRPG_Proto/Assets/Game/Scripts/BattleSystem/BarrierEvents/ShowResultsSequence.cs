@@ -25,11 +25,7 @@ public class ShowResultsSequence : ASequence {
 
 	public override void Execute ()
 	{
-		if(this.winningTeam == WinningTeam.TEAM_A) {
-			Debug.Log("TEAM A WINS!!");
-		}
-		else {
-			Debug.Log("TEAM B WINS!!");
-		}
+		ResultsView resultsView = (ResultsView) ViewHandler.Instance.Show(ViewNames.RESULTS_PANEL_STRING);
+		resultsView.SetWinningTeam(this.winningTeam);
 	}
 }

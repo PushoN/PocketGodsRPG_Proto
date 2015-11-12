@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// Temporary game hud screen
 /// By: NeilDG
 /// </summary>
-public class GameHUDScreen : MonoBehaviour {
+public class GameHUDView : View {
 
 	public const string CONTROLLABLE_UNIT_KEY = "CONTROLLABLE_UNIT_KEY";
 	public const string UNIT_POSITION_KEY = "UNIT_POSITION_KEY";
@@ -17,10 +17,22 @@ public class GameHUDScreen : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		this.hpBarList = new List<HPBarElement>();
-		EventBroadcaster.Instance.AddObserver(EventNames.ON_RETRIEVE_UNIT_POSITION, this.OnReceiveUnitPosition);
+
 	}
 
 	void OnDestroy() {
+
+	}
+
+	public override void OnShowStarted ()
+	{
+		base.OnShowStarted ();
+		EventBroadcaster.Instance.AddObserver(EventNames.ON_RETRIEVE_UNIT_POSITION, this.OnReceiveUnitPosition);
+	}
+
+	public override void OnHideCompleted ()
+	{
+		base.OnHideCompleted ();
 		EventBroadcaster.Instance.RemoveObserver(EventNames.ON_RETRIEVE_UNIT_POSITION);
 	}
 

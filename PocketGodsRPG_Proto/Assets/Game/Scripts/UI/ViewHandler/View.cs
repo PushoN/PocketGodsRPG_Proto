@@ -13,6 +13,8 @@ public class View : MonoBehaviour {
 
 	[SerializeField] private bool asRootScreen = false;
 	[SerializeField] protected RectTransform rectTransform;
+	[SerializeField] private DOTViewAnimation.EntranceType entranceType;
+	[SerializeField] private DOTViewAnimation.ExitType exitType;
 
 	private IViewAnimation viewAnimation;
 
@@ -25,10 +27,10 @@ public class View : MonoBehaviour {
 	public virtual void Show() {
 
 		if(this.viewAnimation == null) {
-			//HOViewAnimation hoViewAnimation = new HOViewAnimation(this.rectTransform,this);
-			//hoViewAnimation.SetAnimationType(this.entranceType, this.exitType);
+			DOTViewAnimation hoViewAnimation = new DOTViewAnimation(this.rectTransform,this);
+			hoViewAnimation.SetAnimationType(this.entranceType, this.exitType);
 			
-			//this.viewAnimation = hoViewAnimation;
+			this.viewAnimation = hoViewAnimation;
 		}
 
 		this.Reset();
@@ -144,18 +146,26 @@ public class View : MonoBehaviour {
 	public virtual void OnShowStarted() {
 		ViewHandler.Instance.RestrictUIActions();
 		this.ToggleAllButtons(false);
+
+		Debug.Log ("View show started");
 	}
 	public virtual void OnShowCompleted() {
 		ViewHandler.Instance.AllowUIActions();
 		this.ToggleAllButtons(true);
+
+		Debug.Log ("View show completed");
 	}
 	public virtual void OnBackButtonPressed() {}
 	public virtual void OnHideStarted() {
 		ViewHandler.Instance.RestrictUIActions();
 		this.ToggleAllButtons(false);
+
+		Debug.Log ("View show hide started");
 	}
 	public virtual void OnHideCompleted() {
 		ViewHandler.Instance.OnViewHidden(this);
+
+		Debug.Log ("View show hide completed");
 	}
 	#endregion
 

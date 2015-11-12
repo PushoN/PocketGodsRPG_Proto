@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -20,8 +20,8 @@ public class InitHPBarSequence : ASequence {
 			Vector3 unitScreenPos = Camera.main.WorldToViewportPoint(unit.transform.position);
 
 			Parameters parameters = new Parameters();
-			parameters.PutObjectExtra(GameHUDScreen.UNIT_POSITION_KEY, unitScreenPos);
-			parameters.PutObjectExtra(GameHUDScreen.CONTROLLABLE_UNIT_KEY, unit);
+			parameters.PutObjectExtra(GameHUDView.UNIT_POSITION_KEY, unitScreenPos);
+			parameters.PutObjectExtra(GameHUDView.CONTROLLABLE_UNIT_KEY, unit);
 
 			EventBroadcaster.Instance.PostEvent(EventNames.ON_RETRIEVE_UNIT_POSITION, parameters);
 		}
@@ -31,8 +31,8 @@ public class InitHPBarSequence : ASequence {
 			Vector3 unitScreenPos = Camera.main.WorldToViewportPoint(unit.transform.position);
 
 			Parameters parameters = new Parameters();
-			parameters.PutObjectExtra(GameHUDScreen.UNIT_POSITION_KEY, unitScreenPos);
-			parameters.PutObjectExtra(GameHUDScreen.CONTROLLABLE_UNIT_KEY, unit);
+			parameters.PutObjectExtra(GameHUDView.UNIT_POSITION_KEY, unitScreenPos);
+			parameters.PutObjectExtra(GameHUDView.CONTROLLABLE_UNIT_KEY, unit);
 			
 			EventBroadcaster.Instance.PostEvent(EventNames.ON_RETRIEVE_UNIT_POSITION, parameters);
 		}

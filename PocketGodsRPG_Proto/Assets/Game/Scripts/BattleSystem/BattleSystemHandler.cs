@@ -57,7 +57,9 @@ public class BattleSystemHandler : MonoBehaviour {
 
 		//INITIALIZE POST BATTLE EVENT
 		this.showResultsSeq = new ShowResultsSequence(this.postBattleSequence);
+		PostGameCleanup gameCleanup = new PostGameCleanup(this.postBattleSequence);
 		BarrierEvent gameplayWrapUpEvent = new BarrierEvent(BattleState.RESULTS.ToString());
+		gameplayWrapUpEvent.AddSequence(gameCleanup);
 		gameplayWrapUpEvent.AddSequence(this.showResultsSeq);
 
 		this.postBattleSequence.CreateMajorEvent(gameplayWrapUpEvent);
